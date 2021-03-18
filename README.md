@@ -12,6 +12,8 @@
   - git clone url(clone link)
   - cd folder
 - Open the project into code editor
+- Go to Mysql database and import blog.db into the database
+  - (blog.db location: db/blog.db)
 - Run the project 
 
 

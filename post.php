@@ -92,7 +92,7 @@ if($_SESSION['login']==false)
         <div class="input-group mb-3 text-area">
           <textarea name="cmt" id="comment" rows="1"></textarea>
           <button class="btn cmt-icn" name="cmt-icn<?php echo $postid ?>" type="submit"><i class="fa fa-paper-plane arrow-icn" aria-hidden="true"></i></button>
-          <!-- <a href="#" class="cmt-icn"><i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->
+          <!-- <a href="#" class="cmt-icn" name="cmt-icn?php echo $postid ?>"><i class="fa fa-paper-plane" aria-hidden="true"></i></a> -->
         </div>
 
         <?php 
