@@ -23,6 +23,8 @@
     echo "<div class='alert alert-success'>User Updated Successfully!</div>";
     }elseif($status==3){
     echo "<div class='alert alert-danger'>User Deleted Successfully!</div>";
+    }else{
+      echo "<div class='alert alert-danger'>Please Fill the forms.</div>";
     }
   }
 ?>

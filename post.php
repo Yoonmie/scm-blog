@@ -5,7 +5,6 @@ if($_SESSION['login']==false)
 {
   header("Location: login.php");
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,9 +66,9 @@ if($_SESSION['login']==false)
   </div>
 <!---add post list--->
 
- 
   <?php 
     require('connect.php');
+    $userid=$_SESSION['userid'];
     $post_result = mysqli_query($db, "SELECT posts.*,users.name FROM posts LEFT JOIN users ON posts.user_id=users.id"); 
     while($postrow = mysqli_fetch_assoc($post_result)): 
     $postid= $postrow['id'];
@@ -78,16 +77,20 @@ if($_SESSION['login']==false)
       <tr class="blog-ttl">
         <th class="bg-light">
           <h3 class="ttl-name"><?php echo $postrow['title']?></h3> <h5>published by <?php echo $postrow['name']?></h5>
-          <span class="icn-list clearFix">
+          <span class="icn-list clearFix" 
+          <?php 
+             if($userid!=$postrow['user_id']) { ?>
+             style="display: none;"
+            <?php }
+          ?>>
           <a href="#" class="icn-close"> <i class="fa fa-times" aria-hidden="true"></i> </a>
-          <a href="#" class="icn-edit"> <i class="fa fa-pencil" aria-hidden="true"></i> </a>
+          <a href="admin/post-show.php?postid=<?php echo $postrow['id'] ?>" class="icn-edit"> <i class="fa fa-pencil" aria-hidden="true"></i> </a>
           </span>
         </th>
       </tr>
       <tr><td><p><?php echo $postrow['body'] ,$_SESSION['username'],$_SESSION['userid']?></p></td></tr>
-      <tr>
-        
-        <td class="">
+      <tr> 
+        <td>
         <form method="POST">
         <div class="input-group mb-3 text-area">
           <textarea name="cmt" id="comment" rows="1"></textarea>
@@ -109,7 +112,6 @@ if($_SESSION['login']==false)
         $cmtselect = mysqli_query($db, "SELECT comments.*,users.name from comments join users on users.id=comments.user_id join posts on posts.id=comments.post_id");
         while($cmtrow=mysqli_fetch_assoc($cmtselect)):
          if($cmtrow['post_id']==$postrow['id']){?>
-         
           <div class="form-group border comment-session">
             <a href="#"> <?php echo $cmtrow['name'];?></a>
             <p><?php  print_r($cmtrow['body']);?></p> 
@@ -117,14 +119,12 @@ if($_SESSION['login']==false)
         <?php }
         endwhile; ?>
         </div>
-     
      </form>
         </td> 
       </tr>
       </table>
       <?php endwhile; ?>
-      <!--table-->
-   
+      <!--table--> 
 </div> 
   
 

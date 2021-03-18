@@ -50,7 +50,7 @@ if($_SESSION['login']==false)
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <a href="admin/logout.php" class="btn btn-primary">Logout</a>
+        <a href="logout.php" class="btn btn-primary">Logout</a>
       </form>
     </div>
   </nav>
@@ -70,7 +70,7 @@ if($_SESSION['login']==false)
  
   <?php 
     require('../connect.php');
-    $post_result = mysqli_query($db, "SELECT posts.*,users.name FROM posts LEFT JOIN users ON posts.user_id=users.id"); 
+    $post_result = mysqli_query($db, "SELECT posts.*,users.name FROM posts LEFT JOIN users ON posts.user_id=users.id ORDER BY updated_date_time DESC"); 
     while($postrow = mysqli_fetch_assoc($post_result)): 
     $postid= $postrow['id'];
     ?> 
@@ -79,8 +79,8 @@ if($_SESSION['login']==false)
         <th class="bg-light">
           <h3 class="ttl-name"><?php echo $postrow['title']?></h3> <h5>published by <?php echo $postrow['name']?></h5>
           <span class="icn-list clearFix">
-          <a href="#" class="icn-close"> <i class="fa fa-times" aria-hidden="true"></i> </a>
-          <a href="#" class="icn-edit"> <i class="fa fa-pencil" aria-hidden="true"></i> </a>
+          <a href="#" class="icn-close" name="icn-close<?php echo $postid ?>"> <i class="fa fa-times" aria-hidden="true"></i> </a>
+          <a href="post-show.php?postid=<?php echo $postrow['id'] ?>" class="icn-edit" name="icn-edit<?php echo $postid ?>"> <i class="fa fa-pencil" aria-hidden="true"></i> </a>
           </span>
         </th>
       </tr>
