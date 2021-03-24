@@ -1,9 +1,8 @@
 <?php
 require('../connect.php');
 session_start();
-$id="";
 $errorMessage="";
-$select=mysqli_query($db,"SELECT * FROM users");
+$userselect=mysqli_query($db,"SELECT * FROM users");
 
 if(isset($_POST['btnlogin'])) {
   $email=$_POST['email'];
@@ -11,18 +10,23 @@ if(isset($_POST['btnlogin'])) {
 
   if($email!=null && $password!=null)
   {
-    while($row=mysqli_fetch_assoc($select)){
-      if($email==$row['email'] && $password==$row['password'])
-      {
-        $_SESSION['login']=true;
-        $_SESSION['userid']=$row['id'];
-        $_SESSION['username']=$row['name'];
-        header("Location:post-list.php");
-      } 
-      else{
-        $errorMessage='LogIn Failed';
+      while($user=mysqli_fetch_assoc($userselect)){
+        if($email==$user['email'] && $password==$user['password'])
+        {
+          $_SESSION['row']=$user['role_id'];
+          $_SESSION['userid']=$user['id'];
+          $_SESSION['username']=$user['name'];
+          if($_SESSION['row']==1){
+            header("Location:index.php");
+          }
+          else {
+            header("Location:post-list.php");
+          }
+        } 
+        else{
+          $errorMessage='LogIn Failed';
+        }
       }
-    }
   }
   else{
     $errorMessage='Please Enter UserName and Password';
@@ -35,7 +39,7 @@ if(isset($_POST['btnlogin'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
   <title>Log In Form</title>
   <style>
   </style>
@@ -43,11 +47,11 @@ if(isset($_POST['btnlogin'])) {
 <body class="bg-light">
 
 <div class="container rounded-lg col-lg-6  col-sm-10  col-10 mt-5">
-<?php if(isset($_POST['btnlogin'])) { ?>
+<?php if(isset($_POST['btnlogin'])):?>
   <div class="alert alert-danger">
     <?php echo $errorMessage;?>
   </div>
-<?php }?>
+<?php endif; ?>
   <form action="login.php" method="post">
   <div class="form-group mt-3">
     <label for="email">Email address</label>
@@ -57,10 +61,11 @@ if(isset($_POST['btnlogin'])) {
     <label for="password">Password</label>
     <input type="password" class="form-control form-control-sm col12" name="pw" id="password">
   </div>
+  <a href="register.php">Register</a>
   <button type="submit" class="btn btn-info col-12 mt-3 mb-3 " name="btnlogin">Log In</button>
   </form>
 </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
 </html>

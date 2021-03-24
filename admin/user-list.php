@@ -1,44 +1,101 @@
+<?php
+session_start();
+if($_SESSION['row']=="")
+{
+  header("Location: login.php");
+}
+else{
+  if($_SESSION['row']!=1) {
+    header("Location:post-list.php");
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <title>User List</title>
+  <title>User-List | Blog</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-<div class="container col-lg-8 col-sm-10 col-10 mt-3">
-<table class="table border table-striped mt-4">
+<body id="user-list">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
+  <a class="navbar-brand" href="index.php">BLOG</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Welcome <?php echo $_SESSION['username']?> !</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <a href="logout.php" class="btn btn-info" >Log-Out</a>
+    </form>
+  </div>
+</nav>
+<!--nav--->
+<div class="container col-lg-10 col-sm-12 col-12">
+  <div class="input-group add-list mb-5">
+    <input type="text" class="form-control" placeholder="Search User Name">
+    <div class="input-group-append">
+      <button class="btn btn-info" type="button"><i class="fa fa-search"></i></button>
+    </div>
+  </div>
+  <!---add post list--->
+  <table class="table border table-striped mt-4">
   <thead>
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
       <th scope="col">Password</th>
-      <th scope="col">Time</th>
+      <th scope="col">Role</th>
+      <th scope="col">Image</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
   <?php 
     require('../connect.php');
-    $select=mysqli_query($db,"SELECT * FROM users");
-    while($row=mysqli_fetch_assoc($select)):
+    $userresult=mysqli_query($db,"SELECT users.*, role.name AS rolename FROM users LEFT JOIN role ON users.role_id=role.id");
+    while($user=mysqli_fetch_assoc($userresult)):
   ?>
     <tr>
-      <th scope="row"><?php echo $row['id'] ?></th>
-      <td><?php echo $row['name'] ?></td>
-      <td><?php echo $row['email'] ?></td>
-      <td><?php echo $row['password'] ?></td>
-      <td><?php echo $row['updated_date_time'] ?></td>
-      <td><a href="user-show.php?cid=<?php echo $row['id'] ?>" class="btn btn-primary mr-2">Edit</a><a href="user-delete.php?cid=<?php echo $row['id'] ?>" class="btn btn-danger">Delete</a></td>
+      <th scope="row"><?php echo $user['id'] ?></th>
+      <td><?php echo $user['name'] ?></td>
+      <td><?php echo $user['email'] ?></td>
+      <td><?php echo $user['password'] ?></td>
+      <td><?php echo $user['rolename'] ?></td>
+      <td class="user-img"><img src="../img/<?php echo $user['image'] ?>" alt="user image" class="img-thumbnail "> </td>
+      <td><a href="user-show.php?cid= <?php echo $user['id'] ?>" class="btn btn-primary mr-2">Edit</a><a href="user-delete.php?cid=<?php echo $user['id'] ?>" class="btn btn-danger">Delete</a></td>
     </tr>
     <?php endwhile; ?>
   </tbody>
-</table>
+  </table>
 </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
 </html>

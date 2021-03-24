@@ -8,10 +8,10 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
   <title>User Registraton Form</title>
 </head>
-<body class="bg-light">
+<body id="reg" class="bg-light">
 
 <div class="container col-lg-8 col-sm-10 col-10 mt-3">
 <?php
@@ -28,7 +28,7 @@
     }
   }
 ?>
-  <form action="user-create.php" method="post">
+  <form action="user-create.php" method="post" enctype="multipart/form-data">
     <h1 class="text-center mb-3">User Registration Form</h1>
     <div class="form-group row offset-1">
       <div class="col-3">
@@ -36,6 +36,24 @@
       </div>
       <div class="col-7">
         <input type="text" name="name" class="form-control">
+      </div>
+    </div>
+    <div class="form-group row offset-1">
+      <div class="col-3">
+       <label for="password" class="col-4">Role</label>
+      </div>
+      <div class="col-7">
+
+        <?php
+          require ('../connect.php');
+          $roleresult=mysqli_query($db,"SELECT * FROM role") ;
+        ?>
+        
+        <select class="form-select" aria-label="Default select example" name="role" style="width: 100%; border:lightgray thin solid;outline:none;">
+        <?php while($role=mysqli_fetch_assoc($roleresult)):?>
+          <option value="<?php echo $role['id']?>" ><?php echo $role['name']?></option>
+        <?php endwhile; ?>
+        </select>
       </div>
     </div>
     <div class="form-group row offset-1">
@@ -54,39 +72,19 @@
         <input type="text" name="password" class="form-control">
       </div>
     </div>
+    <div class="form-group row offset-1">
+      <div class="col-3">
+       <label for="image" class="col-4">Image</label>
+      </div>
+      <div class="col-7">
+        <input type="file" name="image">
+      </div>
+    </div>
       <button class="btn btn-primary offset-5" name="btn-reg">Register</button>
   </form>
-<table class="table border table-striped mt-4">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Password</th>
-      <th scope="col">Time</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-  <?php 
-    require('../connect.php');
-    $select=mysqli_query($db,"SELECT * FROM users");
-    while($row=mysqli_fetch_assoc($select)):
-  ?>
-    <tr>
-      <th scope="row"><?php echo $row['id'] ?></th>
-      <td><?php echo $row['name'] ?></td>
-      <td><?php echo $row['email'] ?></td>
-      <td><?php echo $row['password'] ?></td>
-      <td><?php echo $row['created_date_time'] ?></td>
-      <td><a href="user-show.php?cid=<?php echo $row['id'] ?>" class="btn btn-primary mr-2">Edit</a><a href="user-delete.php?cid=<?php echo $row['id'] ?>" class="btn btn-danger">Delete</a></td>
-    </tr>
-    <?php endwhile; ?>
-  </tbody>
-</table>
 </div>
  
 </body>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
 </html>

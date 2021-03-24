@@ -5,13 +5,119 @@
   visibility: hidden;
   font-size: 0;
 }
-#home .blog-ttl {
-  position: relative;
+.container {
+  margin-top: 90px;
 }
-/* .blog-ttl .ttl-name {
-  float: left;
-} */
+#post .icn-list{
+  float: right;
+}
+#post .icn-list .icn-edit {
+  color: white;
+  width: 50px;
+  background-color: #0087d1;
+  height: 50px;
+  float: right;
+  text-align: center;
+  line-height: 50px;
+  padding-top: 14px;
+}
+#post .icn-list .icn-edit:hover {
+  background-color: #05285c;
+}
 
+#post .icn-list .icn-close {
+  color: white;
+  width: 50px;
+  background-color: #f30d1d;
+  height: 50px;
+  float: right;
+  text-align: center;
+  line-height: 50px;
+  margin-left: 5px;
+  padding-top: 14px;
+}
+#post .icn-list .icn-close:hover {
+  background-color: #9c040e;
+}
+#post .blog-body {
+  word-wrap: break-word;
+}
+#post .card-header .blog-username {
+  color: #031f2e;
+  font-size: 24px;
+}
+#post textarea {
+  width: 97%; 
+  border:lightgray thin solid;
+  outline: none;
+}
+#post .cmt-icn {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: -3px;
+  width: 30px;
+  height: 30px;
+  background-color: #0087d1;
+  color: #fff;
+  border-radius: 5px;
+  line-height: 30px;
+  text-align: center;
+}
+#arrow-icn {
+  position: absolute;
+  left: 5px;
+  top: 7px;
+}
+#post .overflow-auto{
+  overflow-y: scroll;
+  max-height: 155px;
+}
+#post .comment-session {
+  width: 95%;
+  background-color: #ffffffd4;
+  word-wrap: break-word;
+}
+#user-list .user-img .img-thumbnail {
+  width: 90%;
+  max-width: 250px;
+  max-height: 250px;
+}
+
+#addpost #row_style {
+  margin-top: 30px;
+}
+
+#addpost #submit {
+  display: block;
+  margin: auto;
+}
+#addpost textarea {
+  width: 100%;
+  outline: none;
+}
+#post-show textarea {
+  width: 100%;
+  outline: none;
+}
+#post-show .btn-list {
+  margin: 0 auto;
+}
+.show-image {
+  width: 90%; max-width: 200px; max-height: 200px;
+}
+/* 
+#home .blog-ttl .username-ttl a {
+  color: #031f2e;
+  font-size: 24px;
+}
+
+#home .bodylist{
+  word-wrap: break-word;
+}
+#home table tr:last-child{
+  background-image: linear-gradient(rgb(184 207 231 / 25%),  rgb(215 228 242 / 12%)); 
+}
 #home .main {
   margin-top: 95px;
 }
@@ -44,6 +150,8 @@
 }
 #home .comment-session {
   width: 95%;
+  background-color: #ffffffd4;
+  word-wrap: break-word;
 }
 #home .text-area textarea {
   width: 97%; 
@@ -62,6 +170,11 @@
   border-radius: 5px;
   line-height: 30px;
   text-align: center;
+}
+#arrow-icn {
+  position: absolute;
+  left: 5px;
+  top: 7px;
 }
 
 
@@ -89,4 +202,4 @@
 #addpost textarea {
 width: 100%;
 outline: none;
-}
+} */
