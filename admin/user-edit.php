@@ -14,14 +14,13 @@ if($photo){
   move_uploaded_file($temp,"../img/$img");
   $update="UPDATE users SET name='$name',email='$email',password='$pw' ,role_id='$role', image='$img' WHERE id=$id";
   mysqli_query($db,$update);
-  header("Location:register.php?status=2");
+  // header("Location:register.php?status=2");
+  header("Location:user-list.php");
 }
 else {
   $update="UPDATE users SET name='$name',email='$email',password='$pw' ,role_id='$role' WHERE id=$id";
   mysqli_query($db,$update);
-  header("Location:register.php?status=2");
+  // header("Location:register.php?status=2");
+  header("Location:user-list.php");
 }
-// $update="UPDATE users SET name='$name',email='$email',password='$pw' WHERE id=$id";
-// mysqli_query($db,$update);
-// header("Location:register.php?status=2");
 ?>

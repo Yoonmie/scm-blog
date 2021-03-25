@@ -18,7 +18,6 @@
   height: 50px;
   float: right;
   text-align: center;
-  line-height: 50px;
   padding-top: 14px;
 }
 #post .icn-list .icn-edit:hover {
@@ -32,7 +31,6 @@
   height: 50px;
   float: right;
   text-align: center;
-  line-height: 50px;
   margin-left: 5px;
   padding-top: 14px;
 }

@@ -1,34 +1,88 @@
 # scm_blog
-- [Register](#reg)
-- [Login](#login)
-- [Home](#home)
+- [Index](#index)
+- [Post](#post)
+- [Register](#admin/reg)
+- [User-List](#admin/user-list)
+- [User-Edit](#admin/user-edit)
+- [User-Delete](#admin/user-delete)
+- [Login](#admin/login)
+- [Index](#admin/index)
+- [Post-List](#admin/post-list)
+- [Post-Edit](#home)
+- [Post-delete](#home)
 - [Logout](#logout)
 
 
-## Steps
+## Steps to execute in the browser
 
 - Copy clone link
 - Add this project into the htdocs of xampp folder from terminal 
-  - git clone url(clone link)
-  - cd folder
+  * Window + R and write "cmd"
+  * Add Clone Link into folder
+    - git clone url(clone link)
+    - cd folder (cd scm-blod)
 - Open the project into code editor
-- Go to Mysql database and import blog.db into the database
-  - (blog.db location: db/blog.db)
+- Import blog.db into the database
+  * Go to Mysql database
+  * Import cloned database file into Mysql database(blog.db location: db/blog.db)
 - Run the project 
 
+## Admin side
+- Can access all User data
+- Can edit and delete users
+- Can access all posts
+- Can edit and delete posts
+- Can comment on the posts
+
+## User side
+- Can add new post
+- Can edit and delete their own posts
+- Can comment on the posts
+
+
+## Index
+
+All Users can access all posts and comments
+
+## Post
+
+All users can access each user's posts
 
 ## register
 
-Here is a register page. Need to register the account before logging in.
+Here is a register page.Users have to choose thier roles(admin or author). Need to register the account before logging in.
+
+## User-List
+
+Only admin can access user-list page and admin can edit and delete users from this page.
+
+## User-Edit
+
+This page is for changing user data. Only admin can update the data.
+
+## User-Delete
+
+This page is for deleting user data. Only admin can delete the data.
+
 ## login
 
 Here is a login page and can only login the account with registered email and account. If not u cannot log into the account and go to home page.
 
+## Index(admin/index)
 
-## Home
+Only admin can access this page. Admin can also edit, delete and comment on each post.
 
-It can be able to access after logged in. It should not be able to access without logged in.
+## Post-List
 
+Authors can access the page and commment on each post. They can only edit and delete their posts.
+
+## Post-Edit 
+
+This page is for updating posts. It will redirect to Index page if the user was admin and to post-list page if the user was author.
+
+## Post-Delete
+
+This page is for deleting posts. It will redirect to Index page if the user was admin and to post-list page if the user was author.
 
 ## Logout
 

@@ -1,7 +1,6 @@
 <?php
   require ('../connect.php');
   $id=$_GET['cid'];
-  echo $id;
   $userselect=mysqli_query($db,"SELECT * FROM users WHERE id=$id");
   $row=mysqli_fetch_assoc($userselect);
 ?>
@@ -28,15 +27,26 @@
         <input type="text" name="name" class="form-control" value="<?php echo $row['name'] ?>">
       </div>
     </div>
+
     <?php
        require ('../connect.php');
        $roleresult=mysqli_query($db,"SELECT * FROM role") ;
     ?>
-    <select class="form-select" aria-label="Default select example" name="role" style="width: 100%; border:lightgray thin solid;outline:none;">
-      <?php while($role=mysqli_fetch_assoc($roleresult)):?>
-        <option value="<?php echo $role['id']?>" ><?php echo $role['name']?></option>
-      <?php endwhile; ?>
-    </select>
+
+    <div class="form-group row offset-1">
+      <div class="col-3">
+       <label for="role" class="col-4">Role</label>
+      </div>
+      <div class="col-7">
+        <select class="form-select" aria-label="Default select example" name="role" style="width: 100%; border:lightgray thin solid;outline:none;">
+        <?php while($role=mysqli_fetch_assoc($roleresult)):?>
+          <option value="<?php echo $role['id']?>" ><?php echo $role['name']?></option>
+        <?php endwhile; ?>
+      </select>
+      </div>
+    </div>
+    
+    
 
 
      <div class="form-group row offset-1">
@@ -68,7 +78,7 @@
 
       </div>
       <div class="col-5 border">
-        <img src="../img/<?php echo $row['image'] ?>" alt="user image">
+        <img src="../img/<?php echo $row['image'] ?>" alt="user image" class="show-image">
       </div>
     </div>
     <div class="form-group mt-4">

@@ -11,7 +11,7 @@
 </head>
 <body id="post">
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="index.php">BLOG</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -50,46 +50,60 @@
     <div class="input-group-append">
       <button class="btn btn-info" type="button"><i class="fa fa-search"></i></button>
     </div>
-    <a href="post-create.php" class="btn btn-info search offset-1">Add Post</a>
+    <a href="admin/post-create.php" class="btn btn-info search offset-1">Add Post</a>
   </div>
   <!---add post list--->
-  <div class="card border">
+  <?php 
+    require('connect.php');
+    $post_select = mysqli_query($db, "SELECT posts.*,users.name,users.id AS userid, users.image AS userimg FROM posts LEFT JOIN users ON posts.user_id=users.id ORDER BY updated_date_time DESC"); 
+    while($post = mysqli_fetch_assoc($post_select)): 
+    $postid= $post['id'];
+  ?> 
+  <div class="card border mb-5">
     <div class="card-header bg-light"> 
-      <img src="img/bnr-2.JPG" class="rounded-circle user-pic mr-3" alt="user-pic" style="width:50px; height: 50px;">
-      <span class="blog-username"><a href="">USERNAME</a></span>
-      <div class="icn-list clearFix">
-        <a href="post-delete.php?postid=<?php echo $postrow['id'] ?>" class="icn-close"> <i class="fa fa-times" aria-hidden="true"></i> </a>
-        <a href="post-show.php?postid=<?php echo $postrow['id'] ?>" class="icn-edit"> <i class="fa fa-pencil" aria-hidden="true"></i> </a>
-      </div>
+      <img src="img/<?php echo $post['userimg'] ?>" class="rounded-circle user-pic mr-3" alt="user-pic" style="width:50px; height: 50px;">
+      <span class="blog-username"><a href="post.php?uid=<?php echo $post['userid'] ?>"><?php echo $post['name'] ?></a></span>
+     
     </div>
     <!---title--->
     <div class="card-body bg-white">
       <div class="row">
-        <img src="img/bnr-2.JPG"  class="col-lg-6 col-sm-12 col-12" alt="post-img" style="width:100%; height: auto;">
+        <img src="img/<?php echo $post['image'] ?>"  class="col-lg-6 col-sm-12 col-12" alt="post-img" style="width:100%; height: auto;">
         <div class="blog-body col-lg-6 col-sm-12 col-12">
-          <h3>TITLE</h3>
-          <p>BODy</p>
+          <h3 class="mb-3"><?php echo $post['title'] ?></h3>
+          <p><?php echo $post['body'] ?></p>
         </div>
       </div>
     </div>
     <!--body--->
+  
     <div class="card-comment p-3 bg-light">
       <span><h5>Comments</h5></span>
-      <div class="input-group mb-3">
-        <textarea name="cmt" id="comment" rows="1"></textarea>
-        <button class="btn cmt-icn" name="cmt-icn<?php echo $postid ?>" type="submit"><i class="fa fa-paper-plane arrow-icn" aria-hidden="true" id="arrow-icn"></i></button>
-      </div>
+      
+
+      <form method="POST">
       <div class="overflow-auto">
+        
+      <?php
+        $cmtselect = mysqli_query($db, "SELECT comments.*,users.name, users.image AS userimg from comments join users on users.id=comments.user_id join posts on posts.id=comments.post_id ORDER BY comments.updated_date_time DESC");
+        while($cmt=mysqli_fetch_assoc($cmtselect)):
+         if($cmt['post_id']==$post['id']):
+      ?>
+
         <div class="form-group border comment-session p-2">
-          <img src="img/bnr-2.JPG" class="rounded-circle user-pic mr-1" alt="user-pic" style="width:30px; height: 30px;">
-          <span><a href="#">Username</a></span>
-          <p class="ml-5">Reply</p> 
+          <img src="img/<?php echo $cmt['userimg']?>" class="rounded-circle user-pic mr-1" alt="user-pic" style="width:30px; height: 30px;">
+          <span><a href="#"><?php echo $cmt['name']?></a></span>
+          <p class="ml-5"><?php echo $cmt['body']?></p> 
         </div>
+        <?php endif;  endwhile;?> <!--comment if and comment while loop end-->
       </div>
+      </form>
     </div>
     <!--comment--->
   </div>
+  <?php endwhile; ?><!--post select while loop end -->
     <!--card--->
+    </form>
 </div>
 <!---container--->
 </body>

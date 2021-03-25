@@ -71,14 +71,14 @@ else{
   <?php 
     require('../connect.php');
     $userid=$_SESSION['userid'];
-    $post_select = mysqli_query($db, "SELECT posts.*,users.name, users.image AS userimg FROM posts LEFT JOIN users ON posts.user_id=users.id ORDER BY updated_date_time DESC"); 
+    $post_select = mysqli_query($db, "SELECT posts.*,users.id AS userid, users.name, users.image AS userimg FROM posts LEFT JOIN users ON posts.user_id=users.id ORDER BY updated_date_time DESC"); 
     while($post = mysqli_fetch_assoc($post_select)): 
     $postid= $post['id'];
   ?> 
   <div class="card border mb-5">
     <div class="card-header bg-light"> 
       <img src="../img/<?php echo $post['userimg'] ?>" class="rounded-circle user-pic mr-3" alt="user-pic" style="width:50px; height: 50px;">
-      <span class="blog-username"><a href=""><?php echo $post['name'] ?></a></span>
+      <span class="blog-username"><a href="../post.php?uid=<?php echo $post['userid'] ?>"><?php echo $post['name'] ?></a></span>
       <div class="icn-list clearFix">
         <a href="post-delete.php?postid=<?php echo $post['id'] ?>" class="icn-close"> <i class="fa fa-times" aria-hidden="true"></i> </a>
         <a href="post-show.php?postid=<?php echo $post['id'] ?>" class="icn-edit"> <i class="fa fa-pencil" aria-hidden="true"></i> </a>
