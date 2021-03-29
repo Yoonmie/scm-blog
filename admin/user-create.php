@@ -10,10 +10,10 @@
   if($img){
     move_uploaded_file($temp,"../img/$img");
   }
-  if($name!=null && $email!=null && $pw!=null){
+  if($name!=null && $email!=null && $pw!=null && $imgname){
     $insert="insert into users (name,role_id,email,password,image) values ('$name','$role','$email','$pw','$img')";
     $ret=mysqli_query($db,$insert);
-    header("Location:register.php?status=1");
+    header("Location:login.php");
   }
   else {
     header("Location:register.php?status=4");

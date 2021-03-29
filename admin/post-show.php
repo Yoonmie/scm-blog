@@ -2,7 +2,6 @@
 require('../connect.php');
 session_start();
 $post_id=$_GET['postid'];
-echo $post_id.$_SESSION['row'];
 $postselect=mysqli_query($db,"SELECT * FROM posts WHERE id=$post_id");
 $post=mysqli_fetch_assoc($postselect);
 ?>
@@ -18,6 +17,36 @@ $post=mysqli_fetch_assoc($postselect);
   <title>Create Post</title>
 </head>
 <body id="post-show">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
+    
+    <?php
+    $role=$_SESSION['row'];
+      if($role==1){
+        echo '<a class="navbar-brand" href="index.php">BLOG</a>';
+      }
+      else {
+        echo '<a class="navbar-brand" href="post-list.php">BLOG</a>';
+      }
+    
+    ?>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#"><?php echo $_SESSION['row']?></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Welcome <?php echo $_SESSION['username']?> !</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <a href="logout.php" class="btn btn-info" >Log-Out</a>
+      </form>
+    </div>
+  </nav>
+<!--nav--->
   <div class="container col-10 col-lg-8 col-sm-10 border">
     <form action="post-edit.php" method="POST" enctype="multipart/form-data">
         <h4 class="text-center mt-5 mb-5">Update post</h4>

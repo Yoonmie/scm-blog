@@ -6,5 +6,5 @@ echo $id;
 
 $delete="DELETE FROM users WHERE id=$id";
 mysqli_query($db,$delete);
-header("Location:register.php?status=3");
+header("Location:user-list.php");
 ?>

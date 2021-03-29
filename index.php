@@ -18,25 +18,9 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="admin/register.php">Register <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
+       
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <a href="admin/login.php" class="btn btn-info" >Log-In</a>
@@ -45,14 +29,16 @@
   </nav>
 <!--nav--->
 <div class="container col-lg-10 col-sm-12 col-12">
+<form action="admin/search-post.php" method="POST">
   <div class="input-group add-list mb-5">
-    <input type="text" class="form-control" placeholder="Search this blog">
+    <input type="text" class="form-control" placeholder="Search this blog" name="searchtext">
     <div class="input-group-append">
-      <button class="btn btn-info" type="button"><i class="fa fa-search"></i></button>
+      <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
     </div>
-    <a href="admin/post-create.php" class="btn btn-info search offset-1">Add Post</a>
+    <a href="post-create.php" class="btn btn-info search offset-1">Add Post</a>
   </div>
-  <!---add post list--->
+</form>
+<!---add post list--->
   <?php 
     require('connect.php');
     $post_select = mysqli_query($db, "SELECT posts.*,users.name,users.id AS userid, users.image AS userimg FROM posts LEFT JOIN users ON posts.user_id=users.id ORDER BY updated_date_time DESC"); 
@@ -70,7 +56,7 @@
       <div class="row">
         <img src="img/<?php echo $post['image'] ?>"  class="col-lg-6 col-sm-12 col-12" alt="post-img" style="width:100%; height: auto;">
         <div class="blog-body col-lg-6 col-sm-12 col-12">
-          <h3 class="mb-3"><?php echo $post['title'] ?></h3>
+          <a href="post-detail.php?pid=<?php echo $post['id']?>" class="title"> <h3 class="mb-3"><?php echo $post['title'] ?></h3></a>
           <p><?php echo $post['body'] ?></p>
         </div>
       </div>

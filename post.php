@@ -1,13 +1,13 @@
 <?php
 session_start();
-$row="";$username="";
+$role="";$username="";
 if(isset($_SESSION['row']) && isset($_SESSION['username'])){
-  $row=$_SESSION['row'];
+  $role=$_SESSION['row'];
   $username=$_SESSION['username'];
 }
 else {
-  $row="Position";
-  $username="User Name";
+  $role="Position";
+  $username="";
 }
 ?>
 
@@ -24,48 +24,63 @@ else {
 </head>
 <body id="post">
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
-    <a class="navbar-brand" href="post-list.php">BLOG</a>
+    
+    <?php
+       if(isset($_SESSION['username'])){
+
+        if($role==1){
+          echo '<a class="navbar-brand" href="admin/index.php">BLOG</a>';
+        }
+        else{
+          echo '<a class="navbar-brand" href="admin/post-list.php">BLOG</a>';
+        }
+       }
+       else{
+        echo '<a class="navbar-brand" href="index.php">BLOG</a>';
+       }
+    
+    ?>
+    
+ 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><?php echo $row?></a>
+          <a class="nav-link" href="#"><?php echo $role?></a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
+        
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Welcome <?php echo $username?> !</a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <a href="admin/logout.php" class="btn btn-info" >Log-Out</a>
+
+          <?php
+            if(isset($_SESSION['username'])){
+              echo '<a href="admin/logout.php" class="btn btn-info" >Log-Out</a>';
+            }
+            else{
+              echo '<a href="admin/login.php" class="btn btn-info" >Log-In</a>';
+            }
+          ?>
+
       </form>
     </div>
   </nav>
 <!--nav--->
 <div class="container col-lg-10 col-sm-12 col-12">
-<form action="post.php" method="POST">
+
+<form action="admin/search-post.php" method="POST">
   <div class="input-group add-list mb-5">
-    <input type="text" class="form-control" placeholder="Search this blog">
+    <input type="text" class="form-control" placeholder="Search this blog" name="searchtext">
     <div class="input-group-append">
-      <button class="btn btn-info" type="button"><i class="fa fa-search"></i></button>
+      <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
     </div>
-    <a href="admin/post-create.php" class="btn btn-info search offset-1">Add Post</a>
+    <a href="post-create.php" class="btn btn-info search offset-1">Add Post</a>
   </div>
+</form>
   <!---add post list--->
   <?php 
     require('connect.php');
@@ -74,28 +89,28 @@ else {
     while($post = mysqli_fetch_assoc($post_result)): 
     $postid= $post['id'];
   ?> 
+<form action="post.php" method="POST">
   <div class="card border mb-5">
     <div class="card-header bg-light"> 
       <img src="img/<?php echo $post['userimg'] ?>" class="rounded-circle user-pic mr-3" alt="user-pic" style="width:50px; height: 50px;">
       <span class="blog-username"><a href=""><?php echo $post['name'] ?></a></span>
       <div class="icn-list clearFix"
 
-      <?php 
+       <?php
         if(isset($_SESSION['userid'])){
-            $uid=$_SESSION['userid']; //userid from session(login)
-              if($row!=1):
+          $uid=$_SESSION['userid']; //userid from session(login)
 
-                if($uid!=$post['user_id']) : ?>
-                  style="display: none;"
-                  <?php endif; //if loop for checking edit and delete btn
-
-              endif;//if loop for checking row is admin or author
-
-        }//if loop for checking session userid(login)
-
-        else {?>
-          style="display: none;"
-       <?php } ?> > <!--else looping for not having session userid(login)-->
+          if($role!=1){
+            if($uid!=$post['user_id']) {
+              echo 'style="display: none;"';
+            }
+          }
+        }
+        else {
+          echo 'style="display: none;"';
+        }
+       
+       ?>>
 
         <a href="post-delete.php?postid=<?php echo $post['id'] ?>" class="icn-close"> <i class="fa fa-times" aria-hidden="true"></i> </a>
         <a href="post-show.php?postid=<?php echo $post['id'] ?>" class="icn-edit"> <i class="fa fa-pencil" aria-hidden="true"></i> </a>
@@ -106,33 +121,16 @@ else {
       <div class="row">
         <img src="img/<?php echo $post['image'] ?>"  class="col-lg-6 col-sm-12 col-12" alt="post-img" style="width:100%; height: auto;">
         <div class="blog-body col-lg-6 col-sm-12 col-12">
-          <h3 class="mb-3"><?php echo $post['title'] ?></h3>
+          <a href="post-detail.php?pid=<?php echo $post['id']?>" class="title"> <h3 class="mb-3"><?php echo $post['title'] ?></h3></a>
           <p><?php echo $post['body'] ?></p>
         </div>
       </div>
     </div>
     <!--body--->
-    <?php 
-        require('connect.php');
-          if(isset($_POST['cmt-icn'.$postid])){
-            echo $_POST['cmt-icn'.$postid];
-            $postcomment= $_POST['cmt'];
-            $uid=$_SESSION['userid'];
-            echo $uid,",",$postcomment;
-            // $insertcmt = "INSERT INTO comments (user_id, post_id, body) VALUES ('$uid', '$postid', '$postcomment')";
-            // mysqli_query($db, $insertcmt); 
-        }?> <!--comment insert end if-->
+ 
     <div class="card-comment p-3 bg-light">
       <span><h5>Comments</h5></span>
-      <div class="input-group mb-3"
-      <?php 
-          if(!isset($_SESSION['userid'])) { ?>
-          style="display: none;"
-          <?php }
-      ?> >
-        <textarea name="cmt" id="comment" rows="1"></textarea>
-        <button class="btn cmt-icn" name="cmt-icn<?php echo $postid ?>" type="submit"><i class="fa fa-paper-plane arrow-icn" aria-hidden="true" id="arrow-icn"></i></button>
-      </div>
+      
       <!--comment textbox-->
       <form method="POST">
       <div class="overflow-auto">

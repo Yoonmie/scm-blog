@@ -1,14 +1,12 @@
 <?php
 session_start();
-echo $_SESSION['userid'],$_SESSION['username'],$_SESSION['row'];
-if($_SESSION['row']=="")
-{
-  header("Location: login.php");
+if(isset($_SESSION['row']) && isset($_SESSION['username'])){
+  $role=$_SESSION['row'];
+  $username=$_SESSION['username'];
 }
-else{
-  if($_SESSION['row']!=1) {
-    header("Location:post-list.php");
-  }
+else {
+  $role="Position";
+  $username="";
 }
 ?>
 
@@ -21,7 +19,7 @@ else{
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <link rel="stylesheet" href="../css/style.css">
-  <title>Post-List | Blog</title>
+  <title>Post-Search | Blog</title>
 </head>
 <body id="post">
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
@@ -35,42 +33,58 @@ else{
           <a class="nav-link" href="user-list.php">User List <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><?php echo $_SESSION['row']?></a>
+          <a class="nav-link" href="#"><?php echo $role?></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Welcome <?php echo $_SESSION['username']?> !</a>
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Welcome <?php echo $username;?> !</a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <a href="logout.php" class="btn btn-danger" >Log-Out</a>
+
+          <?php
+            if(isset($_SESSION['username'])){
+              echo '<a href="logout.php" class="btn btn-danger" >Log-Out</a>';
+            }
+            else{
+              echo '<a href="login.php" class="btn btn-info" >Log-In</a>';
+            }
+          ?>
+          
       </form>
     </div>
   </nav>
 <!--nav--->
 <div class="container col-lg-10 col-sm-12 col-12">
-<form action="search-post.php" method="POST">
-  <div class="input-group add-list mb-5">
-    <input type="text" class="form-control" placeholder="Search this blog" name="searchtext">
-    <div class="input-group-append">
-      <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
-    </div>
-    <a href="post-create.php" class="btn btn-info search offset-1">Add Post</a>
-  </div>
-</form>
-  <!---add post list--->
-  <?php 
-    require('../connect.php');
-    $userid=$_SESSION['userid'];
-    $post_select = mysqli_query($db, "SELECT posts.*,users.id AS userid, users.name, users.image AS userimg FROM posts LEFT JOIN users ON posts.user_id=users.id ORDER BY updated_date_time DESC"); 
-    while($post = mysqli_fetch_assoc($post_select)): 
-    $postid= $post['id'];
-  ?> 
+
 <form action="index.php" method="POST">
+<?php
+  require('../connect.php');
+  $text=$_REQUEST['searchtext'];
+  $postselect=mysqli_query($db,"SELECT posts.*,users.id AS userid, users.name, users.image AS userimg FROM posts LEFT JOIN users ON posts.user_id=users.id WHERE title LIKE '%$text%'");
+  while($post=mysqli_fetch_assoc($postselect)):
+  $postid=$post['id'];
+?>
   <div class="card border mb-5">
     <div class="card-header bg-light"> 
       <img src="../img/<?php echo $post['userimg'] ?>" class="rounded-circle user-pic mr-3" alt="user-pic" style="width:50px; height: 50px;">
       <span class="blog-username"><a href="../post.php?uid=<?php echo $post['userid'] ?>"><?php echo $post['name'] ?></a></span>
-      <div class="icn-list clearFix">
+      <div class="icn-list clearFix"
+      <?php
+        if(isset($_SESSION['userid'])){
+          $uid=$_SESSION['userid']; //userid from session(login)
+
+          if($role!=1){
+            if($uid!=$post['user_id']) {
+              echo 'style="display: none;"';
+            }
+          }
+        }
+        else {
+          echo 'style="display: none;"';
+        }
+       
+       ?>>
+
         <a href="post-delete.php?postid=<?php echo $post['id'] ?>" class="icn-close"> <i class="fa fa-times" aria-hidden="true"></i> </a>
         <a href="post-show.php?postid=<?php echo $post['id'] ?>" class="icn-edit"> <i class="fa fa-pencil" aria-hidden="true"></i> </a>
       </div>
@@ -98,7 +112,14 @@ else{
   <form method="POST">
     <div class="card-comment p-3 bg-light">
       <span><h5>Comments</h5></span>
-      <div class="input-group mb-3">
+      <div class="input-group mb-3" 
+        <?php
+          if(isset($_SESSION['username'])==null){
+            echo 'style="display: none;"';
+          }
+        ?>
+      
+      >
         <textarea name="cmt" id="comment" rows="1"></textarea>
         <button class="btn cmt-icn" name="cmt-icn<?php echo $postid ?>" type="submit"><i class="fa fa-paper-plane arrow-icn" aria-hidden="true" id="arrow-icn"></i></button>
       </div>
@@ -124,7 +145,7 @@ else{
   </div>
    <?php endwhile; ?> <!--post select while loop end -->
     <!--card--->
-    </form>
+</form>
 </div>
 <!---container--->
 </body>

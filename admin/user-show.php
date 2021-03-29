@@ -11,6 +11,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/style.css">
   <title>Document</title>
 </head>
 <body class="bg-light">
@@ -39,8 +40,10 @@
       </div>
       <div class="col-7">
         <select class="form-select" aria-label="Default select example" name="role" style="width: 100%; border:lightgray thin solid;outline:none;">
-        <?php while($role=mysqli_fetch_assoc($roleresult)):?>
-          <option value="<?php echo $role['id']?>" ><?php echo $role['name']?></option>
+        <?php while($role=mysqli_fetch_assoc($roleresult)):
+          
+          ?>
+          <option value="<?php echo $role['id']?>" <?php if($row['role_id'] == $role['id']) echo"selected"; ?>><?php echo $role['name']?></option>
         <?php endwhile; ?>
       </select>
       </div>
@@ -54,7 +57,7 @@
        <label for="email" class="col-4">email</label>
       </div>
       <div class="col-7">
-        <input type="text" name="email" class="form-control" value="<?php echo $row['email'] ?>">
+        <input type="email" name="email" class="form-control" value="<?php echo $row['email'] ?>">
       </div>
      </div>
 
@@ -77,8 +80,8 @@
     </div>
 
       </div>
-      <div class="col-5 border">
-        <img src="../img/<?php echo $row['image'] ?>" alt="user image" class="show-image">
+      <div class="col-5">
+        <img src="../img/<?php echo $row['image'] ?>" alt="user image" class="show-image"> 
       </div>
     </div>
     <div class="form-group mt-4">
@@ -92,4 +95,5 @@
 </body>
 <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.bundle.min.js"></script>
+
 </html>

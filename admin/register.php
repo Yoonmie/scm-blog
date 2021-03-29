@@ -61,7 +61,7 @@
        <label for="email" class="col-4">email</label>
       </div>
       <div class="col-7">
-        <input type="text" name="email" class="form-control">
+        <input type="email" name="email" class="form-control">
       </div>
     </div>
     <div class="form-group row offset-1">

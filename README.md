@@ -8,6 +8,8 @@
 - [Login](#admin/login)
 - [Index](#admin/index)
 - [Post-List](#admin/post-list)
+- [Post-Search](#admin/post-search)
+- [Post-Detail](#admin/post-detail)
 - [Post-Edit](#home)
 - [Post-delete](#home)
 - [Logout](#logout)
@@ -33,12 +35,13 @@
 - Can access all posts
 - Can edit and delete posts
 - Can comment on the posts
+- Can search the post title
 
 ## User side
 - Can add new post
 - Can edit and delete their own posts
 - Can comment on the posts
-
+- Can search the post title
 
 ## Index
 
@@ -75,6 +78,14 @@ Only admin can access this page. Admin can also edit, delete and comment on each
 ## Post-List
 
 Authors can access the page and commment on each post. They can only edit and delete their posts.
+
+## Post-Search
+
+Show posts when users search post titles from other pages.
+
+## Post-Detail
+
+Show Detail of the post when users have clicked post title from other page.
 
 ## Post-Edit 
 

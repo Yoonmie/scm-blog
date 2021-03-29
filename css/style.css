@@ -104,6 +104,12 @@
 .show-image {
   width: 90%; max-width: 200px; max-height: 200px;
 }
+.change-session .delete-link {
+  color:red;
+}
+.title {
+  color: #000;;
+}
 /* 
 #home .blog-ttl .username-ttl a {
   color: #031f2e;
