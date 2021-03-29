@@ -78,7 +78,13 @@ else {
     <div class="input-group-append">
       <button class="btn btn-info" type="submit"><i class="fa fa-search"></i></button>
     </div>
-    <a href="post-create.php" class="btn btn-info search offset-1">Add Post</a>
+
+    <?php
+      if(isset($_SESSION['username'])) {
+        echo '<a href="post-create.php" class="btn btn-info search offset-1">Add Post</a>';
+      }
+    ?>
+    
   </div>
 </form>
   <!---add post list--->

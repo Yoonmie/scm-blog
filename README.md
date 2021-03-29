@@ -85,7 +85,7 @@ Show posts when users search post titles from other pages.
 
 ## Post-Detail
 
-Show Detail of the post when users have clicked post title from other page.
+Show Detail of the post when users have clicked post title from other page. Users can edit and delete their posts from this page.
 
 ## Post-Edit 
 

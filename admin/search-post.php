@@ -69,6 +69,7 @@ else {
       <img src="../img/<?php echo $post['userimg'] ?>" class="rounded-circle user-pic mr-3" alt="user-pic" style="width:50px; height: 50px;">
       <span class="blog-username"><a href="../post.php?uid=<?php echo $post['userid'] ?>"><?php echo $post['name'] ?></a></span>
       <div class="icn-list clearFix"
+      
       <?php
         if(isset($_SESSION['userid'])){
           $uid=$_SESSION['userid']; //userid from session(login)
