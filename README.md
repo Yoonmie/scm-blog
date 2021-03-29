@@ -22,11 +22,11 @@
   * Window + R and write "cmd"
   * Add Clone Link into folder
     - git clone url(clone link)
-    - cd folder (cd scm-blod)
+    - cd folder (cd scm-blog)
 - Open the project into code editor
-- Import blog.db into the database
+- Import scm_blog.db into the database
   * Go to Mysql database
-  * Import cloned database file into Mysql database(blog.db location: db/blog.db)
+  * Import cloned database file into Mysql database(database location: db/scm_blog.sql)
 - Run the project 
 
 ## Admin side
