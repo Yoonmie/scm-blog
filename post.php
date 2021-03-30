@@ -48,7 +48,7 @@ else {
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#"><?php echo $role?></a>
+          <a class="nav-link disabled" href="#"><?php echo $role?></a>
         </li>
         
         <li class="nav-item">
@@ -59,7 +59,7 @@ else {
 
           <?php
             if(isset($_SESSION['username'])){
-              echo '<a href="admin/logout.php" class="btn btn-info" >Log-Out</a>';
+              echo '<a href="admin/logout.php" class="btn btn-danger" >Log-Out</a>';
             }
             else{
               echo '<a href="admin/login.php" class="btn btn-info" >Log-In</a>';

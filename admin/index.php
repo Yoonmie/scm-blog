@@ -1,6 +1,5 @@
 <?php
 session_start();
-echo $_SESSION['userid'],$_SESSION['username'],$_SESSION['row'];
 if($_SESSION['row']=="")
 {
   header("Location: login.php");
@@ -35,7 +34,7 @@ else{
           <a class="nav-link" href="user-list.php">User List <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><?php echo $_SESSION['row']?></a>
+          <a class="nav-link disabled" href="#"><?php echo $_SESSION['row']?></a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Welcome <?php echo $_SESSION['username']?> !</a>

@@ -29,7 +29,7 @@ if($_SESSION['row']=="")
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><?php echo $_SESSION['row']?></a>
+          <a class="nav-link disabled" href="#"><?php echo $_SESSION['row']?></a>
         </li>
         
         <li class="nav-item">
@@ -37,7 +37,7 @@ if($_SESSION['row']=="")
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <a href="logout.php" class="btn btn-info" >Log-Out</a>
+        <a href="logout.php" class="btn btn-danger" >Log-Out</a>
       </form>
     </div>
   </nav>
