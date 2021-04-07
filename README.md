@@ -27,6 +27,9 @@
 - Import scm_blog.db into the database
   * Go to Mysql database
   * Import cloned database file into Mysql database(database location: db/scm_blog.sql)
+  * In this project, Database username="root" , password="";
+  * Can change username and password from "connect.php" in Line no.2
+  * Here: $db=new mysqli('localhost','root','');
 - Run the project 
 
 ## Admin side

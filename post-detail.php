@@ -85,7 +85,7 @@ else {
       <span class="blog-username"><a href=""><?php echo $post['name']?></a></span>
     </div>
     <!---title--->
-    <div class="card-body bg-white" style="border-bottom: lightgray thin solid;">
+    <div class="card-body bg-white border-bottom">
       <div class="row">
         <img src="img/<?php echo $post['image']?>"  class="col-lg-6 col-sm-12 col-12" alt="post-img" style="width:100%; height: auto;">
         <div class="blog-body col-lg-6 col-sm-12 col-12">
